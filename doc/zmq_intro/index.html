@@ -1,0 +1,299 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>ZeroMQ: Lightweight Message Queue</title>
+<!-- metadata -->
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<meta name="presdate" content="20050728" />
+<meta name="author" content="Eric A. Meyer" />
+<meta name="company" content="Complex Spiral Consulting" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- S5 JS -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer">
+<h1>Guangzhou Techparty, 2010/12</h1>
+<h2>ZeroMQ: Lightweight Message Queue</h2>
+</div>
+
+</div>
+
+
+<div class="presentation">
+
+
+<div class="slide">
+<h1>ZeroMQ: Lightweight Message Queue</h1>
+<h3>Kasicass</h3>
+<h4>gamecoder@work</h4>
+</div>
+
+
+<div class="slide">
+<h1>Part I: ZeroMQ 的起源</h1>
+<ul>
+<p style="text-align: center;">
+<img src="pix/0mq_1.png" alt=""/>
+</p>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>从 AMQP 说起</h1>
+<ul>
+<li>an open standard application layer protocol for message-oriented middleware</li>
+<li>message orientation</li>
+<li>queuing</li>
+<li>routing (including point-to-point and publish-and-subscribe)</li>
+<li>reliability and security</li>
+<li><a href="http://www.amqp.org/">AMQP</a>，让各个厂商的中间件间相互通讯</li>
+<li>出现于2005~2006年</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>一些 AMQP 的实现</h1>
+<ul>
+<li><a href="http://www.openamq.org/">OpenAMQ</a>(C)</li>
+<li><a href="http://www.rabbitmq.com/">RabbitMQ</a>(erlang)</li>
+<li><a href="http://qpid.apache.org/">Apache Qpid</a>(C++/Java)</li>
+<li><a href="http://www.redhat.com/mrg/">Red Hat Enterprise MRG</a></li>
+<li>实现者众，被业界所接受</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>AMQP 的反思</h1>
+<ul>
+<li>iMatix，AMQP的发起公司之一</li>
+<li>来自iMatix的反思</li>
+<li>AMQP还是太重了一点</li>
+<li>学习、使用成本有点高</li>
+<li>能否再轻量级一些</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>ZeroMQ 诞生</h1>
+<ul>
+<li>在raw socket之上封装了一点点</li>
+<li>比raw socket好用的东东</li>
+<li>当然，也有限制 (容后再禀)</li>
+<li>开发者，<a href="http://www.imatix.com/">iMatix</a>的一群人，面向金融行业（业务逻辑决定设计）</li>
+<li><a href="http://www.zeromq.org/">http://www.zeromq.org/</a></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Part II: Learn ZeroMQ by Example</h1>
+<p style="text-align: center;">
+<img src="pix/0mq_2.png" alt=""/>
+</p>
+</div>
+
+
+<div class="slide">
+<h1>Example #1: Echo Server</h1>
+<ul>
+<li>"tcp://" - tcp socket</li>
+<li>创建socket很简单</li>
+<li>监听多个endpoints</li>
+<li>message queue, 就是不用关心server/client的启动顺序</li>
+</ul>
+</div>
+
+<div class="slide">
+<h1>Example #1: Echo Server</h1>
+<ul>
+<li>request/reply pattern</li>
+<li>关键就是保证request/reply这个状态机</li>
+<li><img src="pix/req_rep.png" alt=""/></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Example #2: Simple File Transfer</h1>
+<ul>
+<li>multi-part message</li>
+<li>一个message，分为multi-part来传递</li>
+<li>通过zmq_getsockopt/ZMQ_RCVMORE检查是否multi-part message</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Example #3: Advanced Echo Server (1)</h1>
+<ul>
+<li>multi-thread server</li>
+<li>"inproc://" - in process communication (lock-free queue)</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Example #3: Advanced Echo Server (1)</h1>
+<ul>
+<li>xrequest/xreply pattern</li>
+<li>load balance</li>
+<li><img src="pix/xreq.png" alt=""/></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Example #3: Advanced Echo Server (2)</h1>
+<ul>
+<li>multi-process server</li>
+<li>"ipc://" - inter process communication (domain socket)</li>
+<li>add/remove worker dynamically</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Example #3: Advanced Echo Server (3)</h1>
+<ul>
+<li>zmq device</li>
+<li>一些常见的分发工作，交给 device 吧</li>
+<li>QUEUE, which is like the request-reply broker</li>
+<li>FORWARDER, which is like the pub-sub proxy server</li>
+<li>STREAMER, which is like FORWARDER but for pipeline flows</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Example #4: News Publisher/Subscribler</h1>
+<ul>
+<li>publish/subscrible pattern</li>
+<li>不保证每一条message都能收到</li>
+<li>filter作为message的前缀，自动在sub端做过滤，""表示接收任意消息</li>
+<li>对于sub，一定要设置filter(ZMQ_SUBSCRIBE)</li>
+<li><img src="pix/pubsub.png" alt=""/></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Example #5: Producer/Consumer (1)</h1>
+<ul>
+<li>pipeline pattern</li>
+<li>一条message只被一个pull接收</li>
+<li>保证每条message都有接接收者</li>
+<li>这里的程序是 onc-producer multi-consumer</li>
+<li><img src="pix/push_pull.png" alt=""/></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Example #5: Producer/Consumer (2)</h1>
+<ul>
+<li>很容易可以改写成 multi-producer one-consumer</li>
+<li>socket type 和 bind/connect 之间是独立的</li>
+<li><img src="pix/push_pull_2.png" alt=""/></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Part III: ZeroMQ 使用实例</h1>
+<ul>
+<li>如何组合各种pattern，使用者决定</li>
+<li>拓扑结构不要太复杂</li>
+<li>不支持 connection 管理，比较适合可信任网络(局域网)内进程间的通讯</li>
+<li>对于stateless request，很容易做并发</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>实例(1): 网游网络层框架</h1>
+<ul>
+<li>Connection Manangement：与 libevent 共存 (ZMQ_FD/ZMQ_EVENTS)</li>
+<li><img src="pix/connection_management.png" alt=""/></li>
+<li>进程间RPC：protobuf/json，用啥都可以</li>
+<li><img src="pix/protobuf.png" alt=""/></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>实例(2): Mongrel2</h1>
+<ul>
+<li>The Language Agnostic Web Server</li>
+<li><a href="http://mongrel2.org/">http://mongrel2.org/</a></li>
+<li></li>
+<li>与上一页说的用法其实是一样的</li>
+<li>mongrel2 提供 connection manangement</li>
+<li>mongrel2 与 worker 之间通过 0MQ 通讯</li>
+<li><img src="pix/mongrel2.png" alt=""/></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Part IV: ZeroMQ Internals</h1>
+<ul>
+<li>coder 总喜欢一点点 Internals</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>ZeroMQ Internals: 线程间通讯</h1>
+<ul>
+<li>线程之间通过 mailbox(domain socket) 来实现 queue empty/full 的 notification</li>
+<li>mailbox 每次发送的 command_t 很小(< PIPE_BUF)，操作系统保证原子性</li>
+<li>线程间的 zmq_msg_t 的传递，通过 queue 直接传递 pointer</li>
+<li>queue 通过cpu 的 xchg, cas 实现 lock-free</li>
+<li><img src="pix/inproc.png" alt=""/></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>ZeroMQ Internals: 进程间通讯</h1>
+<ul>
+<li>zmq_init(io_threads), io_threads参数决定了启动几个 0MQ I/O Thread</li>
+<li><img src="pix/ipc.png" alt=""/></li>
+</ul>
+</div>
+
+<div class="slide">
+<h1>谢谢收听！</h1>
+<ul>
+<li><a href="">ZeroMQ The Guide</a>, 最权威的使用手册</li>
+<li><a href="http://kasicass.blog.163.com/blog/static/39561920101118112913724/">ZeroMQ 深入分析</a>，我的几篇博文</li>
+<li><a href="https://github.com/kasicass/kasicass/tree/master/zmq/intro">本ppt所有demo</a>，感谢github :-P</li>
+<li></li>
+<li>感谢<a href="http://www.zeromq.org/">ZeroMQ</a>，让网络程序如此有趣！</li>
+<li>感谢<a href="http://meyerweb.com/eric/tools/s5/">S5</a>，让幻灯片的制作如此轻松！</li>
+</ul>
+</div>
+
+</body>
+</html>
