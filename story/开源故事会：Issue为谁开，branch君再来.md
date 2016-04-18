@@ -1,7 +1,7 @@
 
----- 
+----
 @title:Issue为谁开，branch君再来
----- 
+----
 这是一个真实的小故事。
 虽然有人生来就懂得这个道理，也有人写一辈子代码也未必会明白，但是我相信更多的人要用整个职业生涯去体会这里的精髓。
 
@@ -56,8 +56,8 @@ I've got a couple of changes that should fix that problem and the one caused by 
 \`\`\`\`
 
 ![][image-3]
----- 
----- 
+----
+----
 ![][image-4]
 
 ### Contributions that are counted
@@ -86,6 +86,19 @@ You have opened a pull request or issue in the repository.
 You have starred the repository.
 
 ## 总结
+
+在小Y的习惯的文化中，似乎只有提交代码才算是贡献，发起的问题会潜意识被认为是负担，是非常令人厌恶的。这完全符合人性。只是基于长期的工程实践，开源社区通过一系列制度设计：Issues List, （勋略）contributions graph 等，不断鼓励社区普通用户参与到项目的建设中来。
+
+从开发者的角度看，积极主动地融入社区交流，平时注意跟踪项目演进、新版本特性等，应用实践中的问题积极反馈、甚至帮助其他开发者，也是提高自身水平的重要方法，应成为一种习惯。
+
+
+
+此时此刻，无数的小白用户在检索问题，open issue....
+也有无数的大神在利用业余时间回馈社区：回答问题、fix bug、create respository .....
+
+强大的、世界级的信息基础设施，正是由于这些小白和大神们的贡献，周而复始，水滴石穿。
+
+
 
 [1]:	http://www.jianshu.com/collection/4bc170355af0
 [2]:	https://github.com/zeromq/libzmq/issues/1866
